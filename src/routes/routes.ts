@@ -80,7 +80,7 @@ class DatoRoutes {
 
 
     misRutas() {
-        this._router.post('login', this.login)
+        this._router.get('login', this.login)
         this._router.post('/newUsuario', this.newUsuario)
         this._router.post('/comentario', this.newComment)
         this._router.get('/comentarios/:mov', this.verComentarios)
