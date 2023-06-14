@@ -5,7 +5,7 @@ const comentSchema = new Schema ({
     usuario: {
         type: String
     },
-    id: {
+    mov: {
         type: String
     },
     comentario: {
@@ -18,9 +18,8 @@ const comentSchema = new Schema ({
 
 export type comment = {
     usuario: string | null,
-    nombrePS: string | null,
-    comentario: string | null,
-    value: number | null
+    mov: string | null,
+    comentario: string | null
 }
 
 export const Comments = model('comentarios', comentSchema)

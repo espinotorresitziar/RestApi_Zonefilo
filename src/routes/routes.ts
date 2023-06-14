@@ -31,7 +31,6 @@ class DatoRoutes {
         const { username, nombre, contraseña} = req.body
         await db.conectarBD()
         const dSchema = {
-            idUser: 10,
             username: username,
             nombre: nombre,
             contraseña: contraseña
@@ -45,14 +44,13 @@ class DatoRoutes {
     }
 
     private newComment = async (req: Request, res: Response) => {
-        const { usuario, nombrePS, comentario, value} = req.body
+        const { usuario, mov, comentario } = req.body
         console.log(req.body)
         await db.conectarBD()
         const dSchema = {
             usuario: usuario,
-            nombrePS: nombrePS,
-            comentario: comentario,
-            value: value
+            mov: mov,
+            comentario: comentario
         }
         const oSchema = new Comments(dSchema)
         console.log(req.body)
@@ -63,12 +61,12 @@ class DatoRoutes {
     }
 
     private verComentarios = async (req: Request, res: Response) => {
-        const { nombrePS } = req.params
+        const { mov } = req.params
         console.log(req.params)
         await db.conectarBD()
             .then(async () => {
                 const query = await Comments.find({
-                    nombrePS: nombrePS
+                    mov: mov
                 })
                 res.json(query)
             })
@@ -85,7 +83,7 @@ class DatoRoutes {
         this._router.post('login', this.login)
         this._router.post('/newUsuario', this.newUsuario)
         this._router.post('/comentario', this.newComment)
-        this._router.get('/comentarios/:nombrePS', this.verComentarios)
+        this._router.get('/comentarios/:mov', this.verComentarios)
     }
 }
 
