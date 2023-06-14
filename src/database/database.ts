@@ -20,7 +20,6 @@ class DataBase {
             .catch( (error) => reject(`Error conectando a ${this._cadenaConexion}: ${error}`) ) 
         })
         return promise
-
     }
 
     desconectarBD = async () => {

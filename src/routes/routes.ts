@@ -3,8 +3,6 @@ import { db } from '../database/database'
 import { pathToFileURL } from 'url'
 import { Usuario } from '../model/usuario'
 import { Comments } from '../model/comentarios'
-import { Pelicula } from '../model/pelicula'
-import { Serie } from '../model/serie'
 
 class DatoRoutes {
     private _router: Router
@@ -14,20 +12,6 @@ class DatoRoutes {
     }
     get router(){
         return this._router
-    }
-
-    //Usuarios para login
-    private getUsers = async (req: Request, res: Response) => {
-        await db.conectarBD()
-            .then(async () => {
-                const query = await Usuario.find({ })
-                res.json(query)
-                console.log(query)
-            })
-            .catch((mensaje) => {
-                res.send(mensaje)
-            })
-        await db.desconectarBD()
     }
 
     //Validación login
@@ -94,86 +78,14 @@ class DatoRoutes {
         await db.desconectarBD()
     }
 
-    private newPelicula = async (req: Request, res: Response) => {
-        const { titulo, portada, director, año, sipnosis} = req.body
-        await db.conectarBD()
-        const dSchema = {
-            titulo: titulo,
-            portada: portada,
-            director: director,
-            año: año,
-            sipnosis: sipnosis
-        }
-        const oSchema = new Pelicula(dSchema)
-        console.log(oSchema)
-        await oSchema.save()
-            .then((doc: any) => res.send(doc))
-            .catch((err: any) => res.send('Error: ' + err))
-        await db.desconectarBD()
-    }
-
-    private newSerie = async (req: Request, res: Response) => {
-        const { titulo, portada, director, año, temporadas, sipnosis} = req.body
-        await db.conectarBD()
-        const dSchema = {
-            titulo: titulo,
-            portada: portada,
-            director: director,
-            año: año,
-            temporadas: temporadas,
-            sipnosis: sipnosis
-        }
-        const oSchema = new Serie(dSchema)
-        console.log(oSchema)
-        await oSchema.save()
-            .then((doc: any) => res.send(doc))
-            .catch((err: any) => res.send('Error: ' + err))
-        await db.desconectarBD()
-    }
-
-    private buscarPeliculas = async (req: Request, res: Response) => {
-        const { titulo } = req.params
-        console.log(req.params)
-        await db.conectarBD()
-            .then(async () => {
-                const query = await Pelicula.find({
-                    titulo: titulo
-                })
-                res.json(query)
-            })
-            .catch((mensaje) => {
-                res.send(mensaje)
-            })
-        await db.desconectarBD()
-    }
-
-    private buscarSeries = async (req: Request, res: Response) => {
-        const { titulo } = req.params
-        console.log(req.params)
-        await db.conectarBD()
-            .then(async () => {
-                const query = await Serie.find({
-                    titulo: titulo
-                })
-                res.json(query)
-            })
-            .catch((mensaje) => {
-                res.send(mensaje)
-            })
-        await db.desconectarBD()
-    }
+    
 
 
     misRutas() {
-        this._router.get('/usuarios', this.getUsers)
         this._router.post('login', this.login)
         this._router.post('/newUsuario', this.newUsuario)
         this._router.post('/comentario', this.newComment)
         this._router.get('/comentarios/:nombrePS', this.verComentarios)
-        this._router.post('/newPelicula', this.newPelicula)
-        this._router.post('/newSerie', this.newSerie)
-        this._router.get('/peliculas/:titulo', this.buscarPeliculas)
-        this._router.get('/series/:titulo', this.buscarSeries)
     }
 }
 

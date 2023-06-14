@@ -5,14 +5,11 @@ const comentSchema = new Schema ({
     usuario: {
         type: String
     },
-    nombrePS: {
+    id: {
         type: String
     },
     comentario: {
         type: String
-    },
-    value: {
-        type: Number
     }
 },
 {

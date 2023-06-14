@@ -1,9 +1,6 @@
 import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema({
-    idUser: {
-        type: Number
-    },
     username: {
         type: String
     },
@@ -19,7 +16,6 @@ const userSchema = new Schema({
 })
 
 export type user = {
-    idUser: number | null,
     username: string | null,
     nombre: string | null,
     contraseña: string | null
