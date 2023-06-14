@@ -14,6 +14,18 @@ class DatoRoutes {
         return this._router
     }
 
+    private getUsers = async (req: Request, res: Response) => {
+        await db.conectarBD()
+            .then(async () => {
+                const query = await Usuario.find({ })
+                res.json(query)
+                console.log(query)
+            })
+            .catch((mensaje) => {
+                res.send(mensaje)
+            })
+        await db.desconectarBD()
+    }
     //Validación login
     private login = async ( req: Request, res: Response) => {
         await db.conectarBD()
@@ -80,7 +92,8 @@ class DatoRoutes {
 
 
     misRutas() {
-        this._router.get('/login', this.login)
+        this._router.get('/user', this.getUsers)
+        this._router.post('/login', this.login)
         this._router.post('/newUsuario', this.newUsuario)
         this._router.post('/comentario', this.newComment)
         this._router.get('/comentarios/:mov', this.verComentarios)
